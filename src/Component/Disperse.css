@@ -1,3 +1,28 @@
 .error{
     color: crimson;
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20vh;
+}
+
+.errorcontainer{
+
+}
+.btncontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#btn{
+    background-color: blueviolet;
+    opacity: 90%;
+    border-radius: 10px;
+    padding: 10px 45%;
+    color: white;
 }

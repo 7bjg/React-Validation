@@ -1,6 +1,7 @@
 import { useState } from "react"
 import './Disperse.css';
 import ErrorBtn from "./ErrorBtn";
+import ValidatationError from "./ValidatationError";
 
 
 function findDuplicateStrings(arr) {
@@ -27,17 +28,19 @@ function findDuplicateStrings(arr) {
     return duplicateStrings;
 }
 
-
+export default findDuplicateStrings;
 
 
 
 
 export function DisperseOnSubmit() {
 
-    let [data, setData] = useState("");
 
-    const [validationError, setValidationError] = useState('');
+    let [data, setData] = useState([]);
 
+    const [validationError, setValidationError] = useState([]);
+
+    const [toggle, setToggle] = useState(false);
 
 
     const handleInputChange = (e) => {
@@ -55,7 +58,7 @@ export function DisperseOnSubmit() {
 
 
             let trans = data.trim().split("\n");
-            console.log(trans);
+            // console.log(trans);
 
             let amountarr = trans.map((curr, index) => {
                 return curr.split(" ")[1];
@@ -82,7 +85,9 @@ export function DisperseOnSubmit() {
                 setValidationError(err);
                 return;
             }
-
+            else{
+                setValidationError('');
+            }
 
             //checking for duplicate
 
@@ -97,7 +102,8 @@ export function DisperseOnSubmit() {
                 }
                 // console.log(err);
                 setValidationError(err);
-                
+                //setting the toggle
+                setToggle(true);
                 return;
             }
 
@@ -106,7 +112,7 @@ export function DisperseOnSubmit() {
 
 
         else {
-            // Validation successful, you can perform further actions here
+            // Validation successful, we can perform further actions here
             setValidationError('');
         }
     };
@@ -115,10 +121,10 @@ export function DisperseOnSubmit() {
     return (
         <>
 
-            <div>
+            <div className="container">
                 <form onSubmit={handleSubmit}>
-                    <div>
                         <label htmlFor="inputField">Input:</label>
+                    <div>
                         <textarea
                             rows={6}
                             cols={50}
@@ -130,9 +136,14 @@ export function DisperseOnSubmit() {
 
                     </div>
 
+                    <div className="errorcontainer">
 
-                    {validationError && <p className="error"> {validationError} </p>}
-                    <button type="submit">Submit</button>
+                        {validationError && <div className="error"> {validationError} </div>}
+                        {toggle && <ErrorBtn data={data} setToggle={setToggle} setValidationError={setValidationError} setData={setData} />}
+                    </div>
+                    <div className="btncontainer">
+                        <button id="btn" type="submit">Next</button>
+                    </div>
                 </form>
             </div>
 
